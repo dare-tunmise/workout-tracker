@@ -17,19 +17,15 @@ router.get('/:id', (req, res)=> {
 
 //POST  a new workout
 router.post('/', async (req, res)=> {
-    const workout = new Workout({
-        title: "pushups",
-        reps: 200,
-        load: 40
-    })
-    workout.save()
-        .then((result)=> {
-            res.send(result)
-        })
-        .catch((err)=> {
-            console.log(err)
-        })
-    // res.json({mssg: "POST a new workout"})
+    const {title, load, reps } = req.body
+
+    try {
+        const workout = await Workout.create({title, loads, reps})
+        res.status(200).json(workout)
+    } catch (error) {
+        res.status(400).json({error: error.message} );
+    }
+
 })
 
 //DELETE  a new workout
