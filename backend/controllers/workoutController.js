@@ -2,6 +2,12 @@ const Workout = require('../models/WorkoutModel');
 
 //get all workouts
 
+const getWorkouts = async (req, res)=> {
+    const workouts = await Workout.find({}).sort({createdAt: -1})
+
+    res.status(200).json(workouts)
+}
+
 
 //get a single workout
 
@@ -9,6 +15,7 @@ const Workout = require('../models/WorkoutModel');
 const createWorkout = async (req, res) => {
     const {title, load, reps } = req.body
 
+     //   
     try {
         const workout = await Workout.create({title, load, reps})
         res.status(200).json(workout)
@@ -19,3 +26,8 @@ const createWorkout = async (req, res) => {
 //delete a workout
 
 //update a workout
+
+
+module.exports = {
+    createWorkout
+};
